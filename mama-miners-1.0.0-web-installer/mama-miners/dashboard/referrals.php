@@ -1,0 +1,2 @@
+<?php
+require_once __DIR__ . '/../config.php'; session_start(); if(!isset($_SESSION['user_id'])){header('Location: ../auth/login.php');exit;} $conn=db(); $uid=intval($_SESSION['user_id']); $code=$conn->query("SELECT referral_code FROM users WHERE id=$uid")->fetch_assoc()['referral_code']; $refs=$conn->query("SELECT username,created_at FROM users WHERE referred_by='$code'"); echo json_encode($refs->fetch_all(MYSQLI_ASSOC));
